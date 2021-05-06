@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  nginx:
+    image: nginx
+    hostname: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    healthcheck:
+      test: curl --fail -s http://nginx:80/health || exit 1
+    volumes:
+      - /opt/nginx/config:/etc/nginx/conf.d
+      - /opt/nginx/html:/var/www/html
+      - /opt/nginx/log:/var/log/nginx
+
+networks:
+  default:
+    driver: "bridge"
